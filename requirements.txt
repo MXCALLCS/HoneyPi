@@ -1,0 +1,7 @@
+nmap
+requests
+user-agents
+pyfiglet
+luma.led-matrix
+Pillow
+RPi.GPIO
