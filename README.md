@@ -1,8 +1,8 @@
-# HONEY PI Honeypot Server
+# HONEYPI Honeypot Server
 
 <img src="https://github.com/MXCAlldev/HoneyPi/blob/main/WEB_Honeypot.png" />
 
-### HONEY PI is a sophisticated honeypot server designed to simulate vulnerabilities, detect unauthorized access, and alert system administrators.
+### HONEYPI is a sophisticated honeypot server designed to simulate vulnerabilities, detect unauthorized access, and alert system administrators.
 
 ## Features
 
