@@ -32,4 +32,4 @@ HoneyPi@raspberrypi:~/Honeypi $ sudo python3 main.py
 Customize the server settings, GPIO pin assignments, and LED matrix patterns in the configuration section of the script.
 
 ## Disclaimer
-The HONEY PI Honeypot Server is developed for educational purposes and should be used ethically and responsibly. The creator,does not endorse nor accept responsibility for any improper or unlawful use of this software. Users are advised to implement this project in a secure and controlled environment. By using HONEY PI, you agree to do so at your own risk and hold yourself accountable for any consequences that arise from its use.
+The HONEYPI Honeypot Server is developed for educational purposes and should be used ethically and responsibly. The creator does not endorse nor accept responsibility for any improper or unlawful use of this software. Users are advised to implement this project in a secure and controlled environment. By using HONEYPI, you agree to do so at your own risk and hold yourself accountable for any consequences that arise from its use.
