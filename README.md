@@ -4,6 +4,9 @@
 
 ### HONEYPI is a sophisticated honeypot server designed to simulate vulnerabilities, detect unauthorized access, and alert system administrators.
 
+# Network Topology
+<img src="https://github.com/MXCAlldev/HoneyPi/blob/main/Network%20Topology.png" />
+
 ## Features
 
 * Simulates a vulnerable Apache server running WordPress to attract potential attackers.
