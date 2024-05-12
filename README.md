@@ -1,5 +1,3 @@
-# HONEYPI Honeypot Server
-
 <img src="https://github.com/MXCAlldev/HoneyPi/blob/main/WEB_Honeypot.png" />
 
 #### HONEYPI is an Internal honeypot system that lures and analyzes cyber attackers. It uses a decoy, gathers information, alerts security teams, and signals onsite staff with alarms.
