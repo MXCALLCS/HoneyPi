@@ -4,7 +4,6 @@ import logging
 import requests
 import json
 import threading
-from user_agents import parse
 import socket
 from pyfiglet import figlet_format
 from luma.led_matrix.device import max7219
@@ -13,6 +12,10 @@ from luma.core.render import canvas
 from PIL import Image, ImageDraw
 import RPi.GPIO as GPIO
 import time
+from datetime import datetime
+import httpagentparser
+from user_agents import parse
+from urllib.parse import parse_qs, urlparse
 
 # Configuration for your Telegram Vendor Lookup API
 TELEGRAM_TOKEN = 'YOUR TELEGARAM TOKEN' # Change This
@@ -22,7 +25,6 @@ MAC_VENDOR_LOOKUP_URL = 'https://api.macvendors.com/'
 # ASCII BANNER
 print(figlet_format("HONEY PI By MXCALL", font="standard"))
 # Credits
-
 print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 print("@                                                                                @")
 print("@     NOTE: For educational use only. Use responsibly and at your own risk !     @")
@@ -43,15 +45,20 @@ BUZZER_PIN_2 = 18  # Change this to the GPIO pin number you connected the second
 # Set the buzzer pins as output
 GPIO.setup(BUZZER_PIN_1, GPIO.OUT)
 GPIO.setup(BUZZER_PIN_2, GPIO.OUT)
+
+# Dictionary to keep track of attempts per IP address
+attempts_per_ip = {}
+
 def control_buzzers(state):
     if state:
         # Turn on the buzzers
         GPIO.output(BUZZER_PIN_1, GPIO.HIGH)
         GPIO.output(BUZZER_PIN_2, GPIO.HIGH)
-    else:        
+    else:
         # Turn off the buzzers
         GPIO.output(BUZZER_PIN_1, GPIO.LOW)
         GPIO.output(BUZZER_PIN_2, GPIO.LOW)
+
 def display_dynamic_alert():
     # Create device with a single Cascaded MAX7219
     serial = spi(port=0, device=0, gpio=noop())
@@ -118,12 +125,35 @@ class HoneypotHTTPRequestHandler(BaseHTTPRequestHandler):
     server_version = SERVER_VERSION
     sys_version = SERVICE_NAME
 
-    def handle_request(self, method):
+    def handle_request(self, method, post_data=None):
+        access_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
         visitor_ip = self.client_address[0]
+        if visitor_ip in attempts_per_ip:
+            attempts_per_ip[visitor_ip] += 1
+        else:
+            attempts_per_ip[visitor_ip] = 1
+        attempt_counter = attempts_per_ip[visitor_ip]
+        
         mac_address = get_mac_address(visitor_ip)
         mac_vendor = get_mac_vendor(mac_address) if mac_address != 'Unknown' else 'Unknown'
         user_agent_string = self.headers.get('User-Agent', 'Unknown')
-        user_agent = parse(user_agent_string)
+        
+        # Enhanced User-Agent parsing
+        user_agent = httpagentparser.detect(user_agent_string)
+        parsed_ua = parse(user_agent_string)
+        
+        # Extract device type, OS, and browser details from the parsed user agent
+        device_type = parsed_ua.device.family
+        os_family = parsed_ua.os.family
+        os_version = parsed_ua.os.version_string
+        browser_family = parsed_ua.browser.family
+        browser_version = parsed_ua.browser.version_string
+        
+        # Extract login credentials if available
+        login_data = {}
+        if post_data:
+            login_data = parse_qs(post_data)
         
         # Turn off the buzzers when a visitor accesses the honeypot
         control_buzzers(False)
@@ -135,12 +165,15 @@ class HoneypotHTTPRequestHandler(BaseHTTPRequestHandler):
             'Visitor IP': visitor_ip,
             'MAC Address': mac_address,
             'MAC Vendor': mac_vendor,
-            'Device Type': user_agent.device.family,
-            'Operating System': user_agent.os.family + ' ' + user_agent.os.version_string,
-            'Browser': user_agent.browser.family + ' ' + user_agent.browser.version_string,
+            'Device Type': device_type,
+            'Operating System': f"{os_family} {os_version}",
+            'Browser': f"{browser_family} {browser_version}",
             'User-Agent Raw': user_agent_string,
             'Requested Path': self.path,
-            'Method': method
+            'Method': method,
+            'Attempt Number': attempt_counter,
+            'Access Time': access_time,
+            'Login Data': login_data
         }
         
         message = f"*Alert: Honeypot Triggered*\n```json\n{json.dumps(request_info, indent=2)}\n```"
@@ -156,7 +189,9 @@ class HoneypotHTTPRequestHandler(BaseHTTPRequestHandler):
         self.handle_request('GET')
 
     def do_POST(self):
-        self.handle_request('POST')
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length).decode('utf-8')
+        self.handle_request('POST', post_data)
 
     # Add additional methods to handle other HTTP methods as needed
 
@@ -199,4 +234,3 @@ if __name__ == '__main__':
     server_thread.start()
 
     server_cli(httpd)
-  
