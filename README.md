@@ -7,12 +7,14 @@
 
 ## Features
 
-* Decoy WordPress Administration Page: A fake login page that mimics the real WordPress admin interface to attract attackers.
-* Information Capture: Collects detailed information about attackers, including IP Address, MAC address, etc...
-* MAC Vendor Lookup: Uses an API to identify the vendor of the attacker's network interface.
-* Real-Time Alerts: Sends instant notifications to a Telegram group of security administrators or SOC team members when an attack is detected.
-* Visual and Audible Alerts: Triggers two buzzers and displays an alert message on an 8x8 LED matrix to notify people nearby of a potential security incident.
-* Extensible and customizable to fit various security needs.
+* Decoy WordPress Administration Page: Provides a fake login page that resembles the genuine WordPress admin interface, attracting potential attackers to interact with the honeypot.
+* Information Capture: Collects comprehensive details about attackers, including their IP addresses, MAC addresses, device types, operating systems, browsers, user-agent strings, login attempts, and access timestamps.
+* MAC Vendor Lookup: Utilizes an API to identify the vendor of the attacker's network interface based on their MAC address, providing insights into the origin of the attack.
+* Real-Time Alerts: Sends instant notifications to a designated Telegram group of security administrators or SOC team members whenever suspicious activity is detected, facilitating prompt response to potential threats.
+* Raspberry Pi Integration: Designed to run on a Raspberry Pi, providing scalability and ease of maintenance for deployment in different network environments.
+* Visual and Audible Alerts: Triggers two buzzers and displays a distinct alert message on an 8x8 LED matrix, providing both visual and audible cues to notify nearby individuals of a potential security incident.
+* Attempt Tracking: Keeps track of the number of login attempts per IP address, enabling the identification of repetitive or persistent attackers
+* Customizable and Extensible: Offers flexibility for customization and extension to suit various security needs, allowing security professionals to adapt the honeypot according to their specific requirements.
 
 ## Requirement
 * Python 3.x 
