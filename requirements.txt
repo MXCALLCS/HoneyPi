@@ -1,7 +1,10 @@
 nmap
 requests
-user-agents
 pyfiglet
-luma.led-matrix
+luma.led_matrix
+luma.core
 Pillow
 RPi.GPIO
+httpagentparser
+python-dotenv
+user-agents
