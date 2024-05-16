@@ -31,17 +31,17 @@
 <img src="https://github.com/MXCAlldev/HoneyPi/blob/main/Diagram.png" />
 
 ## Installation
-```console
-HoneyPi@raspberrypi:~ $ sudo apt update && sudo apt upgrade -y
-HoneyPi@raspberrypi:~ $ git clone https://github.com/MXCAlldev/HoneyPi.git
-HoneyPi@raspberrypi:~ $ cd HoneyPi/
-HoneyPi@raspberrypi:~/Honeypi $ sudo pip install -r requirements.txt
+```bash
+sudo apt update && sudo apt upgrade -y
+git clone https://github.com/MXCAlldev/HoneyPi.git
+cd HoneyPi/
+sudo pip install -r requirements.txt
 ```
 ## How to run it
 #### NOTE: RUN Command As ROOT USER
 
-```console
-HoneyPi@raspberrypi:~/Honeypi $ sudo python3 main.py
+```bash
+sudo python3 main.py
 ```
 
 ## How to Integrating HoneyPi with WordPress
