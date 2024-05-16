@@ -31,10 +31,10 @@
 <img src="https://github.com/MXCAlldev/HoneyPi/blob/main/Diagram.png" />
 
 ## Installation
-1. Clone the repository
-2. Execute these Commands
-
 ```console
+HoneyPi@raspberrypi:~ $ sudo apt update && sudo apt upgrade -y
+HoneyPi@raspberrypi:~ $ git clone https://github.com/MXCAlldev/HoneyPi.git
+HoneyPi@raspberrypi:~ $ cd HoneyPi/
 HoneyPi@raspberrypi:~/Honeypi $ sudo pip install -r requirements.txt
 ```
 ## How to run it
