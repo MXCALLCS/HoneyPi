@@ -47,29 +47,27 @@ sudo python3 main.py
 ## How to Integrating HoneyPi with WordPress
 ### Set Up Your Honeypot Server:
 * Ensure that your Honeypi is set up and running. This server will capture and analyze suspicious requests.
-### Customize ".htaccess":
-* Navigate to the root directory of your WordPress installation.
-* Open or create the .htaccess file.
-* Add the following code snippet to the ".htaccess" file:
-```console
-# BEGIN Custom HoneyPi Integration
-<IfModule mod_rewrite.c>
-RewriteEngine On
+* To further protect your WordPress login panel by redirecting unauthorized users based on their IP address, you can add a custom function to your theme's functions.php file:
+  * Open the functions.php file of your theme or create a custom plugin.
+  * Add the following PHP code at The End:
+```bash
+function check_ip_and_redirect() {
+    $allowed_ips = ['your_allowed_ip1', 'your_allowed_ip2']; // Replace with your allowed IPs
+    $visitor_ip = $_SERVER['REMOTE_ADDR'];
 
-# Exclude requests to your honeypot script to prevent redirection loop
-RewriteCond %{REQUEST_URI} !^/honeypot.php
+    if (!in_array($visitor_ip, $allowed_ips)) {
+        
+        wp_redirect('http://your-honeypot-server.com'); // HoneyPi IP Address
+        exit;
+    }
+}
 
-# Redirect requests for wp-login.php and wp-admin to the honeypot server
-RewriteCond %{REQUEST_URI} ^(.*)?wp-login\.php(.*)$ [OR]
-RewriteCond %{REQUEST_URI} ^(.*)?wp-admin$
-RewriteCond %{REMOTE_ADDR} !^YOUR_LEGITIMATE_IP_ADDRESS$
-RewriteRule ^(.*)$ http://your-HoneyPi-server.com/$1 [P,L]
-</IfModule>
-# END Custom Honeypot Integration
+add_action('login_init', 'check_ip_and_redirect');
+
 ```
 #### NOTE:
-* YOUR_LEGITIMATE_IP_ADDRESS: Replace with the IP address from which legitimate requests to WordPress should not be redirected to the honeypot server.
-* your-honeypot-server: Replace with the URL of your Honeypi server.
+* "your_allowed_ip1" and "your_allowed_ip2": Replace with the IP address from which legitimate requests to WordPress should not be redirected to the honeypot server.
+* "your-honeypot-server.com": Replace with the URL of your Honeypi server.
 
 ## Possible Modification
 
