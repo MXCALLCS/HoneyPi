@@ -33,9 +33,10 @@
 ## Installation
 ```bash
 sudo apt update && sudo apt upgrade -y
+sudo apt install nmap
 git clone https://github.com/MXCAlldev/HoneyPi.git
 cd HoneyPi/
-sudo pip install -r requirements.txt
+sudo pip3 install -r requirements.txt
 ```
 ## How to run it
 #### NOTE: RUN Command As ROOT USER
