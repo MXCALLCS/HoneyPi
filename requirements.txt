@@ -1,4 +1,4 @@
-nmap
+python-nmap
 requests
 pyfiglet
 luma.led_matrix
