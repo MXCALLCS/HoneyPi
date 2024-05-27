@@ -38,13 +38,13 @@ git clone https://github.com/MXCAlldev/HoneyPi.git
 cd HoneyPi/
 sudo pip3 install -r requirements.txt
 ```
-## How to run it
 #### NOTE: RUN Command As ROOT and make sure that You Enable SPI Interface
 #### Here Interface Options => SPI => Choose enable => Finish
 ```bash
 sudo sudo raspi-config
 ```
 
+## How to run it
 ```bash
 sudo python3 main.py
 ```
