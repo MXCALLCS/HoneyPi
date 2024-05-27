@@ -36,12 +36,12 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install nmap -y
 git clone https://github.com/MXCAlldev/HoneyPi.git
 cd HoneyPi/
-sudo pip3 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 #### NOTE: RUN Command As ROOT and make sure that You Enable SPI Interface
 #### Here Interface Options => SPI => Choose enable => Finish
 ```bash
-sudo sudo raspi-config
+sudo raspi-config
 ```
 
 ## How to run it
